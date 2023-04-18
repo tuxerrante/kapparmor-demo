@@ -1,39 +1,46 @@
-# Go app template build environment
+# Intro
+This a demo project to show AppArmor capabilities applied through [Kapparmor](https://github.com/tuxerrante/kapparmor) in a Ubuntu virtual machine.
+To simplify it will run on a single node cluster, still it should provide a running Go microservice and an nginx ingress controller.
 
-This is a skeleton project for a Go application, which captures the best build
-techniques I have learned to date.  It uses a Makefile to drive the build (the
-universal API to software projects) and a Dockerfile to build a docker image.
+This could be extended for HA clusters using virtual machines or a real Kubernetes cluster.
 
-This has only been tested on Linux, and depends on Docker buildx to build.
+This demo can't work on WSL2 since it is only a user-space replica of GNU/Linux, indeed missing some needed kernel space feature (apparmor modules).
 
-## Customizing it
+# Demo
 
-To use this, simply copy this repo and make the following changes:
+## Requirements
+- [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
+- Docker image: https://hub.docker.com/repository/docker/teamsis2022/evil-nginx/general
+- Kubectl
+- Helm
 
-Makefile:
-   - change `BINS` to your binary name(s)
-   - replace `cmd/myapp-*` with one directory for each of your `BINS`
-   - change `REGISTRY` to the Docker registry you want to use
-   - choose a strategy for `VERSION` values - git tags or manual
-   - maybe change `ALL_PLATFORMS`
-   - maybe change `BASE_IMAGE` (it must be a manifest-list with support for all
-     platforms in `ALL_PLATFORMS`)
+## 0. Start Kind
 
-Dockerfile.in:
-   - maybe change or remove the `USER` if you need
+```bash
+./hack/setup-kind.sh
+```
 
-## Go Modules
+## 1. Build
+From the project root run
+```bash
+./build/build-app.sh
+```
 
-This assumes the use of go modules (which is the default for all Go builds
-as of Go 1.13).
+## 2. Deploy
+```bash
+./deploy/deploy-on-kind.sh
+```
 
-## Dependencies
+## 3. Test
+```bash
+# Terminal 1
+kubectl logs deployments/evil --follow
 
-This includes go-licenses and golangci-lint, but they are kept in the `tools`
-sub-module.  If you don't want those (or their dependencies, they can be
-removed.
+# Terminal 2
+curl -i http://localhost:8080/evil/hello
+```
 
-## Building
+# More on Building 
 
 Run `make` or `make build` to compile your app.  This will use docker buildx
 (which you need to have installed) to build your app, with the current
@@ -62,3 +69,7 @@ building, this will use docker to execute.
 
 The golangci-lint tool looks for configuration in `.golangci.yaml`.  If that
 file is not provided, it will use its own built-in defaults.
+
+## References
+- This repo was built using https://github.com/thockin/go-build-template
+- https://kind.sigs.k8s.io/docs/user/ingress#ingress-nginx

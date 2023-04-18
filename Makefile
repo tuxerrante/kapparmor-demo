@@ -22,24 +22,25 @@ else
 endif
 
 # The binaries to build (just the basenames)
-BINS ?= myapp-1 myapp-2
+BINS ?= evil-service
 
 # The platforms we support.  In theory this can be used for Windows platforms,
-# too, but they require specific base images, which we do not have.
-ALL_PLATFORMS ?= linux/amd64 linux/arm linux/arm64 linux/ppc64le linux/s390x
+ALL_PLATFORMS ?= linux/amd64
 
 # The "FROM" part of the Dockerfile.  This should be a manifest-list which
 # supports all of the platforms listed in ALL_PLATFORMS.
 BASE_IMAGE ?= gcr.io/distroless/static
 
 # Where to push the docker images.
-REGISTRY ?= example.com
+# REGISTRY ?= $(shell docker info | grep -oP "(?<=Registry: ).*")
+REGISTRY ?= index.docker.io/teamsis2022
+
 
 # This version-strategy uses git tags to set the version string
-VERSION ?= $(shell git describe --tags --always --dirty)
+# VERSION ?= $(shell git describe --tags --always --dirty)
 #
 # This version-strategy uses a manual value to set the version string
-#VERSION ?= 1.2.3
+VERSION ?= 1.0.0
 
 # Set this to 1 to build a debugger-friendly binaries.
 DBG ?=
@@ -58,7 +59,8 @@ MAKEFLAGS += --warn-undefined-variables
 OS := $(if $(GOOS),$(GOOS),$(shell go env GOOS))
 ARCH := $(if $(GOARCH),$(GOARCH),$(shell go env GOARCH))
 
-TAG := $(VERSION)__$(OS)_$(ARCH)
+# TAG := $(VERSION)__$(OS)_$(ARCH)
+TAG := $(VERSION)
 
 GO_VERSION := 1.20
 BUILD_IMAGE := golang:$(GO_VERSION)-alpine

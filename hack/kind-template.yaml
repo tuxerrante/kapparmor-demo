@@ -1,0 +1,30 @@
+# https://kind.sigs.k8s.io/docs/user/using-wsl2/#accessing-a-kubernetes-service-running-in-wsl2
+# WSL2 won't resolve 127.0.0.1 correctly, so you need to replace it with real host IP.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+networking:
+  apiServerAddress: "MY_HOST_IP"
+  apiServerPort: 6443
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  extraMounts:
+  - hostPath: /sys/kernel/security
+    containerPath: /sys/kernel/security
+  - hostPath: /etc/apparmor.d/custom
+    containerPath: /etc/apparmor.d/custom
+  extraPortMappings:
+  - containerPort: 8090
+    hostPort: 8090
+    protocol: TCP
+  - containerPort: 80
+    hostPort: 80
+    protocol: TCP
+  - containerPort: 443
+    hostPort: 443
+    protocol: TCP
