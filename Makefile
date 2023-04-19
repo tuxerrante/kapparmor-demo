@@ -40,7 +40,7 @@ REGISTRY ?= index.docker.io/teamsis2022
 # VERSION ?= $(shell git describe --tags --always --dirty)
 #
 # This version-strategy uses a manual value to set the version string
-VERSION ?= 1.0.1
+VERSION ?= $(APP_VERSION)
 
 # Set this to 1 to build a debugger-friendly binaries.
 DBG ?=
