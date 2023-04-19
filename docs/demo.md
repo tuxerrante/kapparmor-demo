@@ -35,7 +35,11 @@ curl http://127.0.0.1/evil/hello
 kubectl get events --sort-by .lastTimestamp
 ```
 
+Now we can patch the deployment with a safer image
+```sh
+kubectl patch deployment evil  -p '{"spec":{"template":{"spec":{"containers":[{"name":"evil-service","image":"teamsis2022/evil-service:1.0.1-safe"}]}}}}'
 
+```
 
 ### Extra
 Clean profiles
