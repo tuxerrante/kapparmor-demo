@@ -9,15 +9,16 @@ This demo can't work on WSL2 since it is only a user-space replica of GNU/Linux,
 # Demo
 
 ## Requirements
-- [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
-- Docker image: https://hub.docker.com/repository/docker/teamsis2022/evil-nginx/general
+- Microk8s
+- [Docker Engine](https://docs.docker.com/engine/install/ubuntu/#set-up-the-repository) (not from Snap)
+- [Kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl) (not from Snap)
 - Kubectl
 - Helm
 
-## 0. Start Kind
+## 0. Start microK8s
 
 ```bash
-./hack/setup-kind.sh
+./hack/setup-microK8s.sh
 ```
 
 ## 1. Build
@@ -28,10 +29,11 @@ From the project root run
 
 ## 2. Deploy
 ```bash
-./deploy/deploy-on-kind.sh
+./deploy/deploy-on-microK8s.sh
 ```
 
 ## 3. Test
+
 ```bash
 # Terminal 1
 kubectl logs deployments/evil --follow
@@ -39,6 +41,7 @@ kubectl logs deployments/evil --follow
 # Terminal 2
 curl -i http://localhost:8080/evil/hello
 ```
+More on this in [docs/demo.md](docs/demo.md)
 
 # More on Building 
 
@@ -72,4 +75,4 @@ file is not provided, it will use its own built-in defaults.
 
 ## References
 - This repo was built using https://github.com/thockin/go-build-template
-- https://kind.sigs.k8s.io/docs/user/ingress#ingress-nginx
+- https://microK8s.sigs.k8s.io/docs/user/ingress#ingress-nginx

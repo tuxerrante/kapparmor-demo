@@ -2,34 +2,41 @@
 #
 # First setup the cluster: hack/setup-kind.sh
 # Check that the ingress and the ingress controller are fine
-######
+############################################################
+
+# MANDATORY: Setup kubectl connections
+alias kubectl='microk8s kubectl'
+alias k='microk8s kubectl'
+kubectl config use-context microk8s
+############################################################
+export SERVICE_PORT=8090
+
+############################################################
 echo "---- Nodes" && kubectl get nodes
-echo "------------"
+echo "_________________"
 
 echo "---- Check for Kapparmor helm chart"
 # echo "Kapparmor chart not present, installing it in the default namespace"
 helm repo add tuxerrante https://tuxerrante.github.io/kapparmor
-helm upgrade kapparmor --install --atomic --timeout 120s --set image.tag=v0.1.2 tuxerrante/kapparmor
+helm upgrade kapparmor --install --atomic --timeout 10s --set image.tag=v0.1.2 tuxerrante/kapparmor
 
-echo "------------"
-echo "---- Deployments"  && kubectl get -A deployment
-echo "------------"
+# echo "_________________"
+# echo "---- Deployments"  && kubectl get -A deployment
+echo "_________________"
 echo "---- Daemonsets"  && kubectl get -A daemonset
-echo "------------"
+echo "_________________"
 echo "---- Services"  && kubectl get -A service
-echo "------------"
-
+echo "_________________"
+############################################################
 # Deploy the souspicious service
-export SERVICE_PORT=8090
-
-kubectl delete deployment evil
 # kubectl create deployment evil --image teamsis2022/evil-nginx:1.0.0 --replicas 1 --port=${SERVICE_PORT}
-kubectl apply -f deploy/evil-service.yaml
+kubectl delete deployment evil
+kubectl apply -f deploy/evil_deployment.yaml
 kubectl create service clusterip --tcp=$SERVICE_PORT:$SERVICE_PORT --insecure-skip-tls-verify=true evil
 kubectl get svc evil
-
+############################################################
 # Verify the logs
-echo "------------"
+echo "_________________"
 kubectl get deployment evil
 echo "> Wait for Evil deployment to start..."
 kubectl wait --for=condition=ready pod --selector=app=evil --timeout 60s

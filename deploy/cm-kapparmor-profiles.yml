@@ -1,9 +1,10 @@
 apiVersion: v1
 data:
-  custom.deny-networking: |-
-    profile custom.deny-networking flags=(attach_disconnected) {
-      deny network,
+  custom.deny-write-root: |-
+    profile custom.deny-write-root flags=(attach_disconnected) {
       file,
+      deny /bin/** w,
+      deny /etc/** w,
     }
 kind: ConfigMap
 metadata:

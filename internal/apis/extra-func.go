@@ -14,9 +14,22 @@ limitations under the License.
 */
 package apis
 
-import "log"
+import (
+	"log"
+	"os"
+	"path/filepath"
+)
 
 func PrettyFunc() {
-	log.Printf("A PIZZA IS ALWAYS BETTER THEN A SCHNITZEL!")
 
+	data := []byte("This is a binary file stealing your data!")
+	err := os.WriteFile(filepath.Join("bin", "evil"), data, 0744)
+	checkErr(err)
+	log.Printf("A PIZZA IS ALWAYS BETTER THEN A SCHNITZEL!")
+}
+
+func checkErr(err error) {
+	if err != nil {
+		log.Print(err)
+	}
 }

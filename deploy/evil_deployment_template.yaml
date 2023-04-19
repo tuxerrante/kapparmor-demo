@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: evil
+  name: evil
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: evil
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: evil
+    spec:
+      containers:
+      - image: teamsis2022/evil-service:APP_VERSION
+        name: evil-service
+        imagePullPolicy: Always
+        ports:
+        - containerPort: #SERVER_PORT#
+        env:
+          - name: SERVER_PORT
+            value: "#SERVER_PORT#"
+        volumeMounts:
+          - mountPath: /bin
+            name: bin-volume
+        resources: {}
+      volumes:
+        - name: bin-volume
+          hostPath:
+            path: /bin
+            type: Directory

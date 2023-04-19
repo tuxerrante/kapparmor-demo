@@ -18,6 +18,8 @@ nodes:
     containerPath: /sys/kernel/security
   - hostPath: /etc/apparmor.d/custom
     containerPath: /etc/apparmor.d/custom
+  - hostPath: /bin
+    containerPath: /bin
   extraPortMappings:
   - containerPort: 8090
     hostPort: 8090
