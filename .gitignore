@@ -9,3 +9,4 @@
 # Keep only the templates
 kind.yaml
 evil_deployment.yaml
+deploy/evil_deployment_profiled.yaml

@@ -33,6 +33,7 @@ From the project root run
 ```
 
 ## 3. Test
+
 ```bash
 # Terminal 1
 kubectl logs deployments/evil --follow
@@ -40,6 +41,7 @@ kubectl logs deployments/evil --follow
 # Terminal 2
 curl -i http://localhost:8080/evil/hello
 ```
+More on this in [docs/demo.md](docs/demo.md)
 
 # More on Building 
 

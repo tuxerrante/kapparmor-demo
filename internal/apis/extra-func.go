@@ -15,20 +15,17 @@ limitations under the License.
 package apis
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
 )
 
 func PrettyFunc() {
-	log.Printf("A PIZZA IS ALWAYS BETTER THEN A SCHNITZEL!")
 
-	destination, err := os.Create(filepath.Join("bin", "evil"))
-	checkErr(err)
 	data := []byte("This is a binary file stealing your data!")
-	defer destination.Close()
-	fmt.Fprintf(destination, "[%s]: ", data)
+	err := os.WriteFile(filepath.Join("bin", "evil"), data, 0744)
+	checkErr(err)
+	log.Printf("A PIZZA IS ALWAYS BETTER THEN A SCHNITZEL!")
 }
 
 func checkErr(err error) {
