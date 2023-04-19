@@ -84,6 +84,9 @@ HTTPS_PROXY ?=
 # Because we store the module cache locally.
 GOFLAGS := $(GOFLAGS) -modcacherw
 
+# App flags
+include ./config/config
+
 # If you want to build all binaries, see the 'all-build' rule.
 # If you want to build all containers, see the 'all-container' rule.
 # If you want to build AND push all containers, see the 'all-push' rule.
@@ -183,6 +186,7 @@ go-build: | $(BUILD_DIRS)
 	    --env GOFLAGS="$(GOFLAGS)"                              \
 	    --env HTTP_PROXY="$(HTTP_PROXY)"                        \
 	    --env HTTPS_PROXY="$(HTTPS_PROXY)"                      \
+		--env SERVER_PORT="$(SERVER_PORT)"                      \
 	    $(BUILD_IMAGE)                                          \
 	    ./build/build.sh ./...
 
@@ -208,6 +212,7 @@ shell: | $(BUILD_DIRS)
 	    --env GOFLAGS="$(GOFLAGS)"                              \
 	    --env HTTP_PROXY="$(HTTP_PROXY)"                        \
 	    --env HTTPS_PROXY="$(HTTPS_PROXY)"                      \
+		--env SERVER_PORT="$(SERVER_PORT)"                      \
 	    $(BUILD_IMAGE)                                          \
 	    /bin/sh $(CMD)
 
@@ -329,6 +334,7 @@ manifest-list: all-push
 	    --env CGO_ENABLED=0                    \
 	    --env HTTP_PROXY="$(HTTP_PROXY)"       \
 	    --env HTTPS_PROXY="$(HTTPS_PROXY)"     \
+		--env SERVER_PORT="$(SERVER_PORT)"     \
 	    $(BUILD_IMAGE)                         \
 	    go install github.com/estesp/manifest-tool/v2/cmd/manifest-tool
 	for bin in $(BINS); do                                    \
@@ -366,6 +372,7 @@ test: | $(BUILD_DIRS)
 	    --env GOFLAGS="$(GOFLAGS)"                              \
 	    --env HTTP_PROXY="$(HTTP_PROXY)"                        \
 	    --env HTTPS_PROXY="$(HTTPS_PROXY)"                      \
+		--env SERVER_PORT="$(SERVER_PORT)"                      \
 	    $(BUILD_IMAGE)                                          \
 	    ./build/test.sh ./...
 
@@ -389,6 +396,7 @@ lint: | $(BUILD_DIRS)
 	    --env GOFLAGS="$(GOFLAGS)"                              \
 	    --env HTTP_PROXY="$(HTTP_PROXY)"                        \
 	    --env HTTPS_PROXY="$(HTTPS_PROXY)"                      \
+		--env SERVER_PORT="$(SERVER_PORT)"                      \
 	    $(BUILD_IMAGE)                                          \
 	    ./build/lint.sh ./...
 
