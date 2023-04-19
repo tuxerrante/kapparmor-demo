@@ -24,7 +24,7 @@ export SERVICE_PORT=8090
 
 kubectl delete deployment evil
 # kubectl create deployment evil --image teamsis2022/evil-nginx:1.0.0 --replicas 1 --port=${SERVICE_PORT}
-kubectl apply -f deploy/evil_service.yaml
+kubectl apply -f deploy/evil_deployment.yaml
 kubectl create service clusterip --tcp=$SERVICE_PORT:$SERVICE_PORT --insecure-skip-tls-verify=true evil
 kubectl get svc evil
 

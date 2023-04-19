@@ -31,9 +31,9 @@ func main() {
 
 func Hello(w http.ResponseWriter, req *http.Request) {
 
-	fmt.Fprintf(w, "hello")
 	log.Printf("/hello invocation.")
 	apis.PrettyFunc()
+	fmt.Fprintf(w, "hello")
 }
 
 func headers(w http.ResponseWriter, req *http.Request) {

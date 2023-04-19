@@ -8,4 +8,4 @@
 
 # Keep only the templates
 kind.yaml
-evil_service.yaml
+evil_deployment.yaml
