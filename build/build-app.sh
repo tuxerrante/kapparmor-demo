@@ -6,7 +6,9 @@ source ./config/config
 
 # K8S Deployment
 sed "s/APP_VERSION/${APP_VERSION}/" ./deploy/evil_deployment_template.yaml > ./deploy/evil_deployment.yaml
+sed "s/APP_VERSION/${APP_VERSION}/" ./deploy/evil_deployment_template_profiled.yaml > ./deploy/evil_deployment_profiled.yaml
 sed -i "s/#SERVER_PORT#/${SERVER_PORT}/" ./deploy/evil_deployment.yaml
+sed -i "s/#SERVER_PORT#/${SERVER_PORT}/" ./deploy/evil_deployment_profiled.yaml
 
 # Dockerfile
 sed -i "s/^EXPOSE .*/EXPOSE ${SERVER_PORT}/" Dockerfile.in
