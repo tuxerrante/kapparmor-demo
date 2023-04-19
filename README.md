@@ -10,7 +10,8 @@ This demo can't work on WSL2 since it is only a user-space replica of GNU/Linux,
 
 ## Requirements
 - [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
-- Docker image: https://hub.docker.com/repository/docker/teamsis2022/evil-nginx/general
+- [Docker Engine](https://docs.docker.com/engine/install/ubuntu/#set-up-the-repository) (not from Snap)
+- [Kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl) (not from Snap)
 - Kubectl
 - Helm
 
