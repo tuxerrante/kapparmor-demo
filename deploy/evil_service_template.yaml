@@ -16,7 +16,7 @@ spec:
         app: evil
     spec:
       containers:
-      - image: teamsis2022/evil-service:1.0.0
+      - image: teamsis2022/evil-service:APP_VERSION
         name: evil-service
         imagePullPolicy: Always
         ports:
