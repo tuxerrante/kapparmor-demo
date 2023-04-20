@@ -35,7 +35,14 @@ curl http://127.0.0.1/evil/hello
 kubectl get events --sort-by .lastTimestamp
 ```
 
-Now we can patch the deployment with a safer image
+The pod should start again one we deactivate the profile, putting it in complain mode:
+```sh
+less /var/log/syslog    # search for deny-write-root 
+sudo aa-complain /etc/apparmor.d/custom/custom.deny-write-root
+kubectl rollout restart deployment evil
+```
+
+Or we can patch the deployment with a safer image and restart
 ```sh
 kubectl patch deployment evil  -p '{"spec":{"template":{"spec":{"containers":[{"name":"evil-service","image":"teamsis2022/evil-service:1.0.1-safe"}]}}}}'
 
