@@ -28,19 +28,33 @@ From the project root run
 ```
 
 ## 2. Deploy
+Deploy on MicroK8S
 ```bash
-./deploy/deploy-on-microK8s.sh
+./deploy/deploy-microk8s.sh
+```
+
+Deploy on a real K8S cluster
+```bash
+./deploy/deploy.sh
 ```
 
 ## 3. Test
-
+**MicroK8s**
 ```bash
 # Terminal 1
 kubectl logs deployments/evil --follow
 
-# Terminal 2
+# Terminal 2 on microK8S
 curl -i http://localhost:8080/evil/hello
 ```
+
+
+**K8S**  
+```sh
+kubectl port-forward services/evil 8090:8090
+```
+
+
 More on this in [docs/demo.md](docs/demo.md)
 
 # More on Building 

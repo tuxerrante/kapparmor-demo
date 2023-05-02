@@ -25,7 +25,7 @@ spec:
         - containerPort: #SERVER_PORT#
         env:
           - name: SERVER_PORT
-            value: "#SERVER_PORT#"
+            value: #SERVER_PORT#
         volumeMounts:
           - mountPath: /bin
             name: bin-volume

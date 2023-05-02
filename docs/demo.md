@@ -1,3 +1,6 @@
+Open a tunnel if the app is on a remote cluster:
+kubectl port-forward services/evil 8090:8090
+
 Call the service and check it is running:
 ```sh
 curl -i http://127.0.0.1/evil/hello
@@ -21,7 +24,14 @@ kubectl logs kapparmor
 
 # terminal 1
 # kubectl patch deployment evil -p '{"spec": {"template":{"metadata":{"annotations":{"container.apparmor.security.beta.kubernetes.io/evil-service":"localhost/custom.deny-write-root"}}}} }'
-sudo rm /bin/evil
+
+################################################
+# Be sure to remove the deployment BEFORE applying the security profile
+# Otherwise you won't be able to remove it anymore until you remove
+# the profile from the configmap
+kubectl delete -f deploy/evil_deployment.yaml
+################################################
+
 kubectl apply -f deploy/evil_deployment_profiled.yaml
 kubectl rollout restart deployment evil
 watch -n 1 ls -t /bin/
@@ -35,7 +45,7 @@ curl http://127.0.0.1/evil/hello
 kubectl get events --sort-by .lastTimestamp
 ```
 
-The pod should start again one we deactivate the profile, putting it in complain mode:
+The pod should start again once we deactivate the profile, putting it in complain mode:
 ```sh
 less /var/log/syslog    # search for deny-write-root 
 sudo aa-complain /etc/apparmor.d/custom/custom.deny-write-root

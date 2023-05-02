@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+include config/config
+
 DBG_MAKEFILE ?=
 ifeq ($(DBG_MAKEFILE),1)
     $(warning ***** starting Makefile for goal(s) "$(MAKECMDGOALS)")
@@ -277,7 +279,7 @@ $(foreach bin,$(BINS),$(eval $(strip                                 \
     .container-$(subst /,_,$(REGISTRY)/$(bin))-$(TAG): BIN = $(bin)  \
 )))
 $(foreach bin,$(BINS),$(eval                                         \
-    .container-$(subst /,_,$(REGISTRY)/$(bin))-$(TAG): bin/$(OS)_$(ARCH)/$(bin)$(BIN_EXTENSION) $(LICENSES) Dockerfile.in  \
+    .container-$(subst /,_,$(REGISTRY)/$(bin))-$(TAG): bin/$(OS)_$(ARCH)/$(bin)$(BIN_EXTENSION) $(LICENSES) Dockerfile  \
 ))
 # This is the target definition for all container-dotfiles.
 # These are used to track build state in hidden files.
@@ -288,7 +290,7 @@ $(CONTAINER_DOTFILES): .buildx-initialized
 	    -e 's|{ARG_ARCH}|$(ARCH)|g'                \
 	    -e 's|{ARG_OS}|$(OS)|g'                    \
 	    -e 's|{ARG_FROM}|$(BASE_IMAGE)|g'          \
-	    Dockerfile.in > .dockerfile-$(BIN)-$(OS)_$(ARCH)
+	    Dockerfile > .dockerfile-$(BIN)-$(OS)_$(ARCH)
 	HASH_LICENSES=$$(find $(LICENSES) -type f                       \
 		    | xargs md5sum | md5sum | cut -f1 -d' ');           \
 	HASH_BINARY=$$(md5sum bin/$(OS)_$(ARCH)/$(BIN)$(BIN_EXTENSION)  \

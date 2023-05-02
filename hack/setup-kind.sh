@@ -37,7 +37,7 @@ kubectl wait --namespace ingress-nginx \
 
 # It takes some time for the amission controller to get ready before accepting ingresses
 sleep 10
-kubectl apply -f ./hack/kind-ingress.yaml
+kubectl apply -f ./hack/evil-ingress.yaml
 
 kubectl get pod -n ingress-nginx -l "app.kubernetes.io/name"=ingress-nginx
 echo

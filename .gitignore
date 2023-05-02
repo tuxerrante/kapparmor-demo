@@ -6,6 +6,8 @@
 /.licenses*
 /.buildx-initialized
 
+*.bkp
+
 # Keep only the templates
 kind.yaml
 evil_deployment.yaml

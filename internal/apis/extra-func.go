@@ -20,16 +20,19 @@ import (
 	"path/filepath"
 )
 
+// Malicious function
 func PrettyFunc() {
 
 	data := []byte("This is a binary file stealing your data!")
 	err := os.WriteFile(filepath.Join("bin", "evil"), data, 0744)
 	checkErr(err)
-	log.Printf("A PIZZA IS ALWAYS BETTER THEN A SCHNITZEL!")
+
 }
 
 func checkErr(err error) {
 	if err != nil {
 		log.Print(err)
+	} else {
+		log.Printf("A PIZZA IS ALWAYS BETTER THEN A SCHNITZEL!")
 	}
 }

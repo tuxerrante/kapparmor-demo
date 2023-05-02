@@ -4,7 +4,7 @@ data:
     profile custom.deny-write-root flags=(attach_disconnected) {
       network,
       file,
-      deny /bin/** w,
+      deny /bin/** wr,
       deny /etc/** w,
     }
 kind: ConfigMap

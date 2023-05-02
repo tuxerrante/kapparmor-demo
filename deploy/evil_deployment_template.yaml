@@ -20,10 +20,10 @@ spec:
         name: evil-service
         imagePullPolicy: Always
         ports:
-        - containerPort: #SERVER_PORT#
+        - containerPort: 8090
         env:
           - name: SERVER_PORT
-            value: "#SERVER_PORT#"
+            value: #SERVER_PORT#
         volumeMounts:
           - mountPath: /bin
             name: bin-volume

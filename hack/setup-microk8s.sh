@@ -26,7 +26,7 @@ kubectl config use-context microk8s
 microk8s enable dns hostpath-storage ingress
 
 # It takes some time for the amission controller to get ready before accepting ingresses
-kubectl apply -f ./hack/kind-ingress.yaml
+kubectl apply -f ./hack/evil-ingress.yaml
 
 kubectl get pod -n ingress -l name=nginx-ingress-microk8s
 

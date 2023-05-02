@@ -1,8 +1,14 @@
 #!/bin/bash
 #
-# This is intended to run a real Kubernetes cluster
+# First setup the cluster: hack/setup-kind.sh
+# Check that the ingress and the ingress controller are fine
 ############################################################
 
+# MANDATORY: Setup kubectl connections
+alias kubectl='microk8s kubectl'
+alias k='microk8s kubectl'
+kubectl config use-context microk8s
+############################################################
 export SERVICE_PORT=8090
 
 ############################################################
@@ -26,14 +32,8 @@ echo "_________________"
 # kubectl create deployment evil --image teamsis2022/evil-nginx:1.0.0 --replicas 1 --port=${SERVICE_PORT}
 kubectl delete deployment evil
 kubectl apply -f deploy/evil_deployment.yaml
-
-echo "> Creating service "
 kubectl create service clusterip --tcp=$SERVICE_PORT:$SERVICE_PORT --insecure-skip-tls-verify=true evil
-
-echo "> Creating ingress "
-kubectl apply -f ./hack/evil-ingress.yaml
-# kubectl create ingress evil --default-backend evil:$SERVICE_PORT
-
+kubectl get svc evil
 ############################################################
 # Verify the logs
 echo "_________________"
