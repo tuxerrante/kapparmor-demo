@@ -1,0 +1,15 @@
+apiVersion: v1
+data:
+  custom.deny-write-root: |-
+    profile custom.deny-write-root flags=(attach_disconnected) {
+      network,
+      deny tcp,
+      file,
+    }
+kind: ConfigMap
+metadata:
+  annotations:
+    meta.helm.sh/release-name: kapparmor
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  name: kapparmor-profiles
