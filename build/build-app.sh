@@ -10,8 +10,8 @@ sed -i 's/\r$//' ./config/config
 
 source ./config/config
 
-# K8S Deployment
-sed "s/APP_VERSION/${APP_VERSION}/" ./deploy/evil_deployment_template.yaml > ./deploy/evil_deployment.yaml
+# Create K8S Deployments
+sed "s/APP_VERSION/${APP_VERSION}/" ./deploy/evil_deployment_template.yaml          > ./deploy/evil_deployment.yaml
 sed "s/APP_VERSION/${APP_VERSION}/" ./deploy/evil_deployment_template_profiled.yaml > ./deploy/evil_deployment_profiled.yaml
 
 # We need some extra parameter to replace strings between double quotes
@@ -30,6 +30,9 @@ sed -i 's/\r$//' Dockerfile.in
 sed "s/^EXPOSE .*/EXPOSE ${SERVER_PORT}/" Dockerfile.in > Dockerfile
 sed -i "s/^ENV SERVER_PORT .*/ENV SERVER_PORT = ${SERVER_PORT}/" Dockerfile
 
+# Clean old images
+echo "> Removing old and dangling old images..."
+# docker rmi "$(docker images --filter "reference=teamsis2022/evil-nginx" -q --no-trunc )" 
 
 make
 make test

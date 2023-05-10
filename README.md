@@ -39,23 +39,7 @@ Deploy on a real K8S cluster
 ```
 
 ## 3. Test
-**MicroK8s**
-```bash
-# Terminal 1
-kubectl logs deployments/evil --follow
-
-# Terminal 2 on microK8S
-curl -i http://localhost:8080/evil/hello
-```
-
-
-**K8S**  
-```sh
-kubectl port-forward services/evil 8090:8090
-```
-
-
-More on this in [docs/demo.md](docs/demo.md)
+After the setup you can **follow the demo in [docs/demo.md](docs/demo.md)**.
 
 # More on Building 
 
@@ -79,7 +63,7 @@ Run `make clean` to clean up.
 
 Run `make help` to get a list of available targets.
 
-## Testing
+## App Testing
 
 Run `make test` and `make lint` to run tests and linters, respectively.  Like
 building, this will use docker to execute.

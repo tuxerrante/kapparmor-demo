@@ -28,6 +28,13 @@ spec:
           - mountPath: /bin
             name: bin-volume
         resources: {}
+      - name: debug
+        image: busybox
+        command: ["bash","-c","while true; do sleep 60s; done"]
+        volumeMounts:
+          - mountPath: /bin
+            name: bin-volume
+
       volumes:
         - name: bin-volume
           hostPath:

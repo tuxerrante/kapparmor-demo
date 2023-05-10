@@ -7,23 +7,22 @@ export SERVICE_PORT=8090
 
 ############################################################
 echo "---- Nodes" && kubectl get nodes
-echo "_________________"
+echo 
 
 echo "---- Check for Kapparmor helm chart"
 # echo "Kapparmor chart not present, installing it in the default namespace"
 helm repo add tuxerrante https://tuxerrante.github.io/kapparmor
-helm upgrade kapparmor --install --atomic --timeout 10s --set image.tag=v0.1.2 tuxerrante/kapparmor
+helm upgrade kapparmor --install --atomic --timeout 10s --set image.tag=0.1.4_dev tuxerrante/kapparmor
 
-# echo "_________________"
+# echo 
 # echo "---- Deployments"  && kubectl get -A deployment
-echo "_________________"
+echo 
 echo "---- Daemonsets"  && kubectl get -A daemonset
-echo "_________________"
+echo 
 echo "---- Services"  && kubectl get -A service
-echo "_________________"
+echo 
 ############################################################
 # Deploy the souspicious service
-# kubectl create deployment evil --image teamsis2022/evil-nginx:1.0.0 --replicas 1 --port=${SERVICE_PORT}
 kubectl delete deployment evil
 kubectl apply -f deploy/evil_deployment.yaml
 
@@ -36,7 +35,7 @@ kubectl apply -f ./hack/evil-ingress.yaml
 
 ############################################################
 # Verify the logs
-echo "_________________"
+echo 
 kubectl get deployment evil
 echo "> Wait for Evil deployment to start..."
 kubectl wait --for=condition=ready pod --selector=app=evil --timeout 60s
@@ -46,15 +45,11 @@ kubectl logs deployments/evil
 echo
 echo "---- Get events"
 kubectl get events --sort-by .lastTimestamp
+
 ### IN A SECOND TERMINAL
 # kubectl proxy --port=${NODE_PORT}
 # curl http://localhost:${NODE_PORT}/hello/
 
-###
-# Apply apparmor profile
-
-###
-# Verify the logs
-
-###
-# kind delete cluster
+############################################################
+# Now follow instructions in demo.md
+#

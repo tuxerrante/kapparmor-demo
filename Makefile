@@ -86,8 +86,6 @@ HTTPS_PROXY ?=
 # Because we store the module cache locally.
 GOFLAGS := $(GOFLAGS) -modcacherw
 
-# App flags
-include ./config/config
 
 # If you want to build all binaries, see the 'all-build' rule.
 # If you want to build all containers, see the 'all-container' rule.
