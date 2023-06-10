@@ -16,7 +16,7 @@ Expected error:
 Solution:
 ```sh
 kubectl delete cm kapparmor-profiles
- kubectl apply -f tests/cm-test-00.yml
+kubectl apply -f tests/cm-test-00.yml
 ```
 
 ## 2
@@ -24,8 +24,8 @@ kubectl delete cm kapparmor-profiles
 
 ```sh
 kubectl delete cm kapparmor-profiles
- kubectl apply -f tests/cm-test-02.yml
- kubectl get cm kapparmor-profiles -o yaml |less
+kubectl apply -f tests/cm-test-02.yml
+kubectl get cm kapparmor-profiles -o yaml |less
 
 ```
 

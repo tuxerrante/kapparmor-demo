@@ -18,7 +18,7 @@ spec:
       containers:
       - image: teamsis2022/evil-service:APP_VERSION
         name: evil-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8090
         env:
@@ -28,12 +28,12 @@ spec:
           - mountPath: /bin
             name: bin-volume
         resources: {}
-      - name: debug
-        image: busybox
-        command: ["bash","-c","while true; do sleep 60s; done"]
-        volumeMounts:
-          - mountPath: /bin
-            name: bin-volume
+      # - name: debug
+      #   image: busybox
+      #   command: ["bash","-c","while true; do sleep 60s; done"]
+      #   volumeMounts:
+      #     - mountPath: /bin
+      #       name: bin-volume
 
       volumes:
         - name: bin-volume
